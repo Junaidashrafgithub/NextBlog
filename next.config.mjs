@@ -5,12 +5,12 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                hostname: "encrypted-tbn0.gstatic.com",
-                protocol: "https",
+                protocol: 'https',
+                hostname: '**',
             },
             {
-                hostname: "lh3.googleusercontent.com",
-                protocol: "https",
+                protocol: 'http',
+                hostname: '**',
             }
         ]
     }
