@@ -5,6 +5,9 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import BlogPostCard from "../components/general/BlogPostCard";
 
 const fetchData = async (user) => {
+    // If user is null (during build time), return empty array
+    if (!user) return [];
+    
     const data = await prisma.blogPost.findMany({
         where: {
             authorId: user.id
@@ -12,13 +15,16 @@ const fetchData = async (user) => {
         orderBy: {
             createdAt: "desc"
         }
-    })
+    });
     return data;
 }
 
 export default async function Dashboard() {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
+    
+    // During build time, we'll just render with empty data
+    // During runtime, middleware will handle the redirect for unauthenticated users
     const blogs = await fetchData(user);
 
     return (
